@@ -134,7 +134,7 @@ if [ "$NAMESPACE" != "WpBlueprint" ] || [ "$THEME_NAME" != "WP Blueprint" ]; the
   done
 
   # Update style.css theme header
-  perl -pi -e "s/Theme Name: WP Blueprint/Theme Name: ${THEME_NAME}/" "$THEME_DIR/style.css"
+  perl -pi -e "s/Theme Name: WpBlueprint/Theme Name: ${THEME_NAME}/" "$THEME_DIR/style.css"
 
   success "Namespace set to '${NAMESPACE}'"
   success "Theme name set to '${THEME_NAME}'"
