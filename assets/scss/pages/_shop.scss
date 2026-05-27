@@ -1,0 +1,86 @@
+.archive-shop{
+    margin: 100px auto;
+
+    .shop-list{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 50px;
+        &__item{
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 4px rgba(0,0,0,0.16);
+            padding: 10px;
+            .shop-card{
+                .img-area{
+                    overflow: hidden;
+                    border-radius: 10px;
+                    img{
+                        object-fit: cover;
+                        width: 100%;
+                        height: 100%;
+                        aspect-ratio: 1 / 1;
+                        object-position: center;
+                    }
+                }
+                .text-area{
+                    margin: 15px 0;
+                    .shop-ttl{
+                        font-size: 18px;
+                        font-weight: 700;
+                        .floor{
+                            background-color: $color_1;
+                            font-size: 14px;
+                            padding: 1px 5px;
+                            border-radius: 5px;
+                            line-height: 1;
+                            margin-right: 10px;
+                            color: $color_3;
+                        }
+                    }
+                    .desc{
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        font-size: 15px;
+                        margin: 10px 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.single-shop{
+    margin: 100px auto;
+    .shop_ttl{
+        font-size: 24px;
+    }
+    .info{
+        display: flex;
+        .floor{
+            font-size: 14px;
+            background-color: $color_1;
+            color: $color_3;
+            padding: 1px 5px;
+            border-radius: 2px;
+        }
+        .cat{
+            margin-left: 10px;
+        }
+    }
+    .img{
+        overflow: hidden;
+        margin: 40px 0;
+        border-radius: 10px;
+        img{
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 2 / 1;
+            object-position: center;
+        }
+    }
+}

@@ -1,0 +1,275 @@
+@import 'module/variable';
+@import 'module/mixin';
+* {
+	box-sizing: border-box;
+	&::before {
+		pointer-events: none;
+		user-select: none;
+	}
+	&::after {
+		pointer-events: none;
+		user-select: none;
+	}
+}
+html {
+	font-size: 62.5%;
+	overflow-x: hidden;
+}
+body {
+	position: relative;
+	padding: 0;
+	margin: 0;
+	background: #fff;
+	color: $color_1;
+	font-size: 1.6rem;
+	font-family: $font-family_1;
+	line-height: 1.5;
+	overflow-x: hidden;
+	overflow-wrap: anywhere;
+	word-break: normal;
+	line-break: strict;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-size-adjust: none;
+	-webkit-overflow-scrolling: touch !important;
+	-moz-osx-font-smoothing: grayscale;
+}
+h1 {
+	margin: 0;
+}
+h2 {
+	margin: 0;
+}
+h3 {
+	margin: 0;
+}
+h4 {
+	margin: 0;
+}
+h5 {
+	margin: 0;
+}
+h6 {
+	margin: 0;
+}
+p {
+	margin: 0;
+	padding: 0;
+}
+ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+dl {
+	margin: 0;
+	padding: 0;
+}
+dt {
+	margin: 0;
+	padding: 0;
+}
+dd {
+	margin: 0;
+	padding: 0;
+}
+a {
+	color: $color_2;
+	text-decoration: none;
+	outline: none;
+	transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+	transition-property: opacity;
+	&:hover{
+		opacity: 0.6;
+	}
+}
+img {
+	display: block;
+	max-width: 100%;
+	width: 100%;
+}
+canvas {
+	display: block;
+	max-width: 100%;
+}
+iframe {
+	display: block;
+	max-width: 100%;
+}
+figure {
+	margin: 0;
+}
+button {
+	background: transparent;
+	border: none;
+	width: 100%;
+	cursor: pointer;
+}
+.en {
+	font-family: $font-family_2;
+}
+.block {
+	display: block;
+}
+.hidden {
+	display: none !important;
+}
+.relative {
+	position: relative;
+}
+.container {
+	width: 100%;
+	max-width: 1160px;
+	margin: 0 auto;
+	padding: 0 40px;
+	@include respond('mobile'){
+		padding: 0 20px;
+	}
+}
+.center{
+	text-align: center;
+}
+.sp{
+	display: none;
+	@include respond('mobile'){
+		display: block;
+	}
+}
+.pc{
+	display: block;
+	@include respond('mobile'){
+		display: none;
+	}
+}
+
+.container{
+	max-width: 1040px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+/********************************
+BreadCrumb
+*********************************/
+.breadcrumb-wrapper{
+	font-size: 14px;
+	margin: 10px 20px;
+	a{
+		margin-right: 10px;
+		position: relative;
+		padding-right: 10px;
+		&::after{
+			content: "";
+			position: absolute;
+			top: 50%;
+			right: 0;
+			width: 4px;
+			height: 4px;
+			border-top: 1px solid $color_1;
+			border-right: 1px solid $color_1;
+			transform: translate(50%,-50%) rotate(45deg);
+		}
+	}
+}
+
+/********************************
+TITLE
+*********************************/
+.title{
+	font-size: 24px;
+	padding-bottom: 5px;
+	border-bottom: 4px solid $color_1;
+	color: $color_1;
+}
+
+/********************************
+BUTTON
+*********************************/
+.btn{
+	max-width: 230px;
+	width: 100%;
+	margin: 40px auto 0;
+	background-color: $color_1;
+	height: 60px;
+	position: relative;
+	border: 1px solid $color_1;
+	transition: 0.3s ease-in-out;
+	overflow: hidden;
+	a{
+		color: $color_3;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		font-size: 16px;
+		font-weight: 500;
+		letter-spacing: 0.05em;
+		z-index: 1;
+		transition: 0.3s ease-in-out;
+		&::after{
+			content: "";
+			position: absolute;
+			top: 50%;
+			right: 20px;
+			width: 20px;
+			height: 6px;
+			border-bottom: 2px solid $color_3;
+			border-right: 2px solid $color_3;
+			transform: translate(0,-50%) skew(35deg);
+			transition: 0.3s ease-in-out;
+		}
+	}
+	&::before{
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: $color_3;
+		top: 0;
+		left: -100%;
+		transition: 0.3s ease-in-out;
+	}
+	&:hover{
+		&::before{
+			top: 0;
+			left: 0;
+		}
+		a{
+			color: $color_1;
+			&::after{
+				border-bottom: 2px solid $color_1;
+				border-right: 2px solid $color_1;
+			}
+		}
+	}
+}
+
+/********************************
+PAGINATION
+*********************************/
+
+.pagination{
+	ul{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		li{
+			margin: 0 5px;
+			padding: 5px;
+			font-size: 18px;
+			font-weight: 700;
+			color: $color_1;
+			opacity: 0.4;
+			&.active{
+				pointer-events: none;
+				opacity: 1;
+				font-size: 22px;
+			}
+		}
+	}
+}

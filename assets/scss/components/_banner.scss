@@ -1,0 +1,43 @@
+.banner{
+    height: 380px;
+    width: 100%;
+    background-color: $color_4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    @include respond('mobile'){
+        height: 180px;
+    }
+    &::after {
+		content: "";
+		background-image: url(../images/common/bg_arch-white.svg);
+		background-size: 100% 100%;
+		background-position: center;
+		position: absolute;
+		top: calc(100% - 2vw + 1px);
+		left: 0;
+		height: 2vw;
+		width: 100%;
+		z-index: 2;
+	}
+    .text-part{
+        .text{
+            font-family: $font-family_4;
+            font-weight: 500;
+            font-size: 3.2rem;
+            @include respond('mobile'){
+                font-size: 2.8rem;
+            }
+        }
+    }
+}
+
+.single-shop{
+    .banner{
+        background-color: $color_3;
+        &::after{
+            background-image: url(../images/common/bg_arch-pink.svg);
+        }
+    }
+}

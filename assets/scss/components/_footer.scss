@@ -1,0 +1,10 @@
+@import '../module/variable';
+@import '../module/mixin';
+
+
+footer{
+    background-color: $color_1;
+	color: $color_3;
+	text-align: center;
+	padding: 20px;
+}

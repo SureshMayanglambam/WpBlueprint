@@ -1,0 +1,16 @@
+// Variables and mixins first
+@import 'module/variable';
+@import 'module/mixin';
+
+// Base styles
+@import 'base';
+
+//components
+@import 'components/header';
+@import 'components/footer';
+
+// Page-specific styles
+@import 'pages/example';
+@import 'pages/top';
+@import 'pages/news';
+@import 'pages/shop';

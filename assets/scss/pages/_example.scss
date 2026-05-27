@@ -1,0 +1,96 @@
+@import '../module/variable';
+@import '../module/mixin';
+
+
+// .topPage{
+//     margin: 100px auto;
+//     .front-page-news{
+//         margin-bottom: 80px;
+//     }
+//     .front-post{
+//         margin:0 0 20px 40px;
+//         border-bottom: 1px solid #ccc;
+//         padding: 0 10px;
+//         .item_ttl{
+//             &:hover{
+//                 opacity: 0.5;
+//             }
+//         }
+//     }
+// }
+// .title{
+//     font-size: 3rem;
+//     padding-bottom: 5px;
+//     border-bottom: 2px solid $color_1;
+//     margin-bottom: 30px;
+// }
+
+
+// .news-archive, .archive-shop{
+//     margin: 100px auto;
+//     ul{
+//         li{
+//             border-bottom: 1px solid #ccc;
+//             padding: 5px;
+//             margin-bottom: 20px;
+//             font-size: 1.8rem;
+//             font-weight: 500;
+//             &:hover{
+//                 opacity: 0.5;
+//             }
+//         }
+//     }
+// }
+
+// .single-news, .single-shop{
+//     margin: 100px auto;
+//     h1{
+//         padding-bottom: 5px;
+//     }
+//     small{
+//         border-bottom: 2px solid $color_1;
+//         margin-bottom: 40px;
+//         padding-bottom: 10px;
+//         display: block;
+//         font-size: 1.4rem;
+//     }
+//     .content{
+//         blockquote{
+//             background-color: $color_1;
+//             padding: 15px 20px;
+//             color: $color_4;
+//             p{
+//                 em{
+//                     font-style: normal;
+//                     line-height: 1.6em;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// .pagination{
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 100%;
+//     margin: 50px auto;
+//     ul{
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         li{
+//             padding: 5px;
+//             margin: 0 5px;
+//             font-size: 1.6rem;
+//             font-weight: 700;
+//             &:hover{
+//                 opacity: 0.5;
+//             }
+//             &.active{
+//                 pointer-events: none;
+//                 color: #999;
+//             }
+//         }
+//     }
+// }

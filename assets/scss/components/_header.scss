@@ -1,0 +1,31 @@
+@import '../module/variable';
+@import '../module/mixin';
+
+//custome header
+
+.header{
+    background-color: $color_1;
+    &__inner{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 30px;
+        .logo{
+            color: $color_3;
+            font-size: 26px;
+        }
+        .nav{
+            &__list{
+                display: flex;
+                justify-content: flex-end;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                .menu-item{
+                    margin: 0 10px 5px;
+                    position: relative;
+                    color: $color_3;
+                }
+            }
+        }
+    }
+}
