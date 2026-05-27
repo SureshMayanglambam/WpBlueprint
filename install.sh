@@ -24,12 +24,12 @@ ask()     { echo -e "${BOLD}  $1${RESET}"; }
 # ── Banner ────────────────────────────────────────────────────────────────────
 echo ""
 echo -e "${CYAN}${BOLD}╔══════════════════════════════════════╗${RESET}"
-echo -e "${CYAN}${BOLD}║       WpBlueprint  installer        ║${RESET}"
+echo -e "${CYAN}${BOLD}║       WpBlueprint  installer         ║${RESET}"
 echo -e "${CYAN}${BOLD}╚══════════════════════════════════════╝${RESET}"
 echo ""
 
 # ── Dependency check ──────────────────────────────────────────────────────────
-for cmd in git curl rsync; do
+for cmd in git curl rsync perl; do
   command -v "$cmd" &>/dev/null || error "'$cmd' is required but not installed."
 done
 
@@ -59,9 +59,9 @@ fi
 
 # ── Theme folder name ─────────────────────────────────────────────────────────
 echo ""
-ask "Theme folder name inside themes/? (default: WpBlueprint)"
+ask "Theme folder name inside themes/? (default: wp-blueprint)"
 read -r THEME_SLUG
-THEME_SLUG="${THEME_SLUG:-WpBlueprint}"
+THEME_SLUG="${THEME_SLUG:-wp-blueprint}"
 
 # Sanitise: lowercase, hyphens only
 THEME_SLUG=$(echo "$THEME_SLUG" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g')
@@ -88,7 +88,7 @@ REPO_URL="https://github.com/SureshMayanglambam/WpBlueprint"
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
-info "Cloning from ${REPO_URL} …"
+info "Cloning from ${REPO_URL} ..."
 git clone --quiet --depth 1 "$REPO_URL" "$TMP_DIR/repo" \
   || error "Could not clone repository. Check your internet connection."
 
@@ -108,44 +108,38 @@ rsync -a \
 success "Theme copied to '$THEME_DIR'"
 echo ""
 
-# ── Step 3 — Theme namespace rename (optional) ────────────────────────────────
+# ── Step 3 — Namespace & theme name ──────────────────────────────────────────
 echo -e "${BOLD}Step 3 of 3 — Namespace & theme name${RESET}"
 echo ""
-echo -e "  By default the theme uses the namespace ${CYAN}WpBlueprint${RESET} and"
-echo -e "  theme name ${CYAN}WP Blueprint${RESET}. You can rename them now, or"
-echo -e "  skip and edit manually later."
+echo -e "  The namespace must match your theme name in PascalCase."
+echo -e "  e.g. theme name ${CYAN}WdTheme${RESET} -> namespace ${CYAN}WdTheme${RESET}"
 echo ""
-ask "Rename the theme? [y/N]"
-read -r DO_RENAME
+ask "Enter your namespace (PascalCase, e.g. WdTheme):"
+ask "(Press Enter to keep default: WpBlueprint)"
+read -r NAMESPACE
+NAMESPACE="${NAMESPACE:-WpBlueprint}"
 
-if [[ "$DO_RENAME" =~ ^[Yy]$ ]]; then
+ask "Enter your theme display name (shown in WP Admin):"
+ask "(Press Enter to keep default: WP Blueprint)"
+read -r THEME_NAME
+THEME_NAME="${THEME_NAME:-WP Blueprint}"
 
-  ask "New theme name (shown in WP Admin, e.g. 'My Awesome Theme'):"
-  read -r THEME_NAME
-  THEME_NAME="${THEME_NAME:-WP Blueprint}"
+if [ "$NAMESPACE" != "WpBlueprint" ] || [ "$THEME_NAME" != "WP Blueprint" ]; then
+  info "Applying namespace '${NAMESPACE}' across all PHP files ..."
 
-  ask "New PHP namespace (no spaces, PascalCase, e.g. 'MyAwesomeTheme'):"
-  read -r NAMESPACE
-  NAMESPACE="${NAMESPACE:-WpBlueprint}"
-
-  info "Renaming namespace to '${NAMESPACE}' and theme name to '${THEME_NAME}' …"
-
-  # Replace namespace in all PHP files
+  # perl -pi replaces all occurrences including inside namespace paths
+  # e.g. WpBlueprint\App\Core becomes WdTheme\App\Core correctly
   find "$THEME_DIR" -name "*.php" | while read -r file; do
-    sed -i.bak \
-      -e "s/namespace WpBlueprint/namespace ${NAMESPACE}/g" \
-      -e "s/use WpBlueprint/use ${NAMESPACE}/g" \
-      -e "s/'WpBlueprint/'${NAMESPACE}/g" \
-      -e "s/WpBlueprint\\\\//${NAMESPACE}\\\\/g" \
-      "$file"
-    rm -f "${file}.bak"
+    perl -pi -e "s/WpBlueprint/${NAMESPACE}/g" "$file"
   done
 
   # Update style.css theme header
-  sed -i.bak "s/Theme Name: WP Blueprint/Theme Name: ${THEME_NAME}/" "$THEME_DIR/style.css"
-  rm -f "$THEME_DIR/style.css.bak"
+  perl -pi -e "s/Theme Name: WP Blueprint/Theme Name: ${THEME_NAME}/" "$THEME_DIR/style.css"
 
-  success "Namespace and theme name updated"
+  success "Namespace set to '${NAMESPACE}'"
+  success "Theme name set to '${THEME_NAME}'"
+else
+  success "Keeping default namespace 'WpBlueprint'"
 fi
 
 echo ""
@@ -159,12 +153,12 @@ echo -e "  Theme installed at:"
 echo -e "  ${CYAN}${BOLD}$THEME_DIR${RESET}"
 echo ""
 echo -e "  Next steps:"
-echo -e "  ${BOLD}1.${RESET} Go to WP Admin → Appearance → Themes → activate ${CYAN}${THEME_SLUG}${RESET}"
-echo -e "  ${BOLD}2.${RESET} Enable debug in wp-config.php to use the debug overlay:"
+echo -e "  ${BOLD}1.${RESET} Go to WP Admin -> Appearance -> Themes -> activate ${CYAN}${THEME_SLUG}${RESET}"
+echo -e "  ${BOLD}2.${RESET} Enable debug overlay in wp-config.php:"
 echo -e "     ${CYAN}define('WP_DEBUG', true);${RESET}"
 echo -e "     ${CYAN}define('THEME_DEBUG', true);${RESET}"
-echo -e "  ${BOLD}3.${RESET} Add your CPTs to ${CYAN}routes/web.php${RESET}"
-echo -e "  ${BOLD}4.${RESET} Create models in ${CYAN}App/Models/${RESET} and controllers in ${CYAN}App/Controllers/${RESET}"
+echo -e "  ${BOLD}3.${RESET} Register your CPTs in ${CYAN}routes/web.php${RESET}"
+echo -e "  ${BOLD}4.${RESET} Add models in ${CYAN}App/Models/${RESET} and controllers in ${CYAN}App/Controllers/${RESET}"
 echo -e "  ${BOLD}5.${RESET} Add templates in ${CYAN}template/${RESET}"
 echo ""
 echo -e "  Docs: ${CYAN}https://github.com/SureshMayanglambam/WpBlueprint${RESET}"
